@@ -1,0 +1,582 @@
+<title>Pharmacognosy 2 Study Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: left sidebar of drugs + one drug per view; mobile = sticky chip row. Botanical green, amber marks. */
+:root{
+  --bg:#F2F5F3; --surface:#FFFFFF; --ink:#13302C; --muted:#55696A; --line:#D5DEDA;
+  --accent:#1F6F5C; --accent-ink:#FFFFFF; --soft:#E3EFEA; --mark:#9A6412; --markbg:#FFF1CC;
+  --good:#1E7B45; --goodbg:#DDF1E4; --bad:#B3402F; --badbg:#F9E1DC;
+  --font-d:'Space Grotesk','Inter',system-ui,sans-serif; --font-b:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1917; --surface:#15251F; --ink:#E6EFEC; --muted:#9BB0AB; --line:#27413A;
+  --accent:#4FC3A1; --accent-ink:#07201A; --soft:#1B2F29; --mark:#F0B93A; --markbg:#3A2E0E;
+  --good:#4CC27F; --goodbg:#143323; --bad:#F0806E; --badbg:#3B1D18; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1917; --surface:#15251F; --ink:#E6EFEC; --muted:#9BB0AB; --line:#27413A;
+  --accent:#4FC3A1; --accent-ink:#07201A; --soft:#1B2F29; --mark:#F0B93A; --markbg:#3A2E0E;
+  --good:#4CC27F; --goodbg:#143323; --bad:#F0806E; --badbg:#3B1D18; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:16px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--font-d);text-wrap:balance;margin:0;line-height:1.2}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.app{max-width:1180px;margin:0 auto;padding-block:20px 64px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:28px;align-items:start}
+.brand{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.brand b{font-family:var(--font-d);font-size:20px}
+.brand span{color:var(--muted);font-size:14px}
+nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;display:flex;flex-direction:column;gap:2px;padding-right:4px}
+nav .gl{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 10px 4px}
+nav .gl:first-child{margin-top:0}
+nav a{display:flex;align-items:center;gap:8px;text-decoration:none;padding:7px 10px;border-radius:8px;font-size:15px}
+nav a:hover{background:var(--soft)}
+nav a[aria-current="page"]{background:var(--accent);color:var(--accent-ink)}
+nav a .ck{width:16px;color:var(--good);font-size:13px;flex:none}
+nav a[aria-current="page"] .ck{color:var(--accent-ink)}
+@media(max-width:899px){
+  .app{grid-template-columns:minmax(0,1fr);gap:14px}
+  nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;flex-direction:row;max-height:none;overflow-x:auto;overflow-y:hidden;background:var(--surface);padding:8px;margin-inline:-4px;border-bottom:1px solid var(--line);border-radius:0 0 12px 12px;white-space:nowrap}
+  nav .gl{display:none}
+  nav a{flex:none;border:1px solid var(--line);padding:6px 12px}
+}
+main{min-width:0;display:flex;flex-direction:column;gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+@media(max-width:520px){.card{padding:16px}}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.hd h1{font-size:clamp(30px,5vw,46px);margin-top:4px}
+.hd .sci{font-style:italic;color:var(--muted);font-size:18px;margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{background:var(--soft);border-radius:999px;padding:3px 12px;font-size:14px}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:10px}
+.fig{margin:0;min-width:0}
+.fig svg{display:block;width:100%;height:auto;border-radius:12px}
+.fig svg text{font-family:var(--font-b)}
+.fig figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+.pn{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}
+.pn a{text-decoration:none;display:inline-block}
+.plain{background:var(--soft);border-radius:12px;padding:16px 18px}
+.plain .eyebrow{color:var(--accent)}
+.plain p{margin:4px 0 0;font-size:17px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.facts div{min-width:0}
+.facts dt{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:2px 0 0}
+.sec h2{font-size:21px;margin-bottom:10px}
+.sec ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.sec li{position:relative;padding-left:20px}
+.sec li::before{content:"";position:absolute;left:3px;top:.7em;width:7px;height:7px;background:var(--accent);border-radius:2px}
+.sec li.s{background:var(--markbg);border-radius:8px;padding:8px 12px 8px 30px}
+.sec li.s::before{content:"\2605";background:none;color:var(--mark);width:auto;height:auto;left:10px;top:8px;font-size:13px;line-height:1.6}
+.flowh{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+.flow{display:flex;flex-wrap:wrap;gap:8px 6px;align-items:center}
+.flow span{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:14px}
+.flow i{font-style:normal;color:var(--accent);font-weight:700}
+.tips{border:1.5px dashed var(--accent);background:transparent}
+.tips h2{font-size:19px;margin-bottom:8px}
+.tips ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.tips .mn{margin-top:12px;font-size:15px;color:var(--muted)}
+.qh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.qh h2{font-size:21px}
+.qscore{font-size:14px;color:var(--muted)}
+.q{padding-block:14px;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0}
+.q p{margin:0 0 10px;font-weight:600}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:start;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:10px 14px}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--soft)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--good);background:var(--goodbg)}
+.opt.no{border-color:var(--bad);background:var(--badbg)}
+.ex{margin:10px 0 0;padding:10px 12px;background:var(--soft);border-radius:8px;font-size:15px}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:10px 18px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn:hover{filter:brightness(1.07)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tblwrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+td a{font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.dc{display:flex;flex-direction:column;gap:2px;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.dc:hover{border-color:var(--accent)}
+.dc b{font-family:var(--font-d);font-size:18px}
+.dc small{color:var(--muted);font-style:italic}
+.dc em{font-style:normal;font-size:13px;color:var(--good)}
+.hero h1{font-size:clamp(32px,6vw,54px)}
+.hero p{max-width:60ch;font-size:18px;color:var(--muted);margin:10px 0 0}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:16px}
+.stats div b{font-family:var(--font-d);font-size:28px;display:block;line-height:1}
+.stats div span{font-size:13px;color:var(--muted)}
+.steps{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.big{font-family:var(--font-d);font-size:56px;line-height:1}
+.wrongitem{padding-block:12px;border-top:1px solid var(--line)}
+.wrongitem small{color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="app">
+  <div class="brand"><b>Pharmacognosy 2</b><span>Roots, rhizomes and bulbs · summary, explanation and quizzes</span></div>
+  <nav id="nav" aria-label="Topics"></nav>
+  <main id="view"></main>
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+var D=[
+{id:"liquorice",n:"Liquorice (Sweet Wood)",sci:"Glycyrrhiza glabra",fam:"Leguminosae (Fabaceae)",grp:"Roots",
+sum:"A very sweet root. Glycyrrhizin is 50 times sweeter than sugar and heals ulcers, but it acts like aldosterone and can cause high blood pressure and low potassium.",
+facts:[["Part used","Dried peeled or unpeeled root and rhizome"],["Varieties","var. typica = Spanish Liquorice; var. glandulifera = Russian Liquorice"],["Sources","Spain, France, England, Italy, Germany, USA, Southern Russia, Iran"],["Family","Leguminosae (Fabaceae)"]],
+secs:[
+{h:"Macroscopical characters",i:["Unpeeled root: dark-brown to reddish-brown outside, bright-yellow inside.","Faint characteristic odour and a very sweet taste."]},
+{h:"Microscopical characters of the powder",i:["Powder colour: light-yellow if peeled, brownish-yellow if unpeeled.","Fibres with crystal sheath: thick lignified wall, narrow lumen, acute apex, surrounded by a sheath of crystals.","Xylem vessels showing bordered pits.","Prismatic crystals of calcium oxalate, free or inside cells.","Numerous starch granules, free or in parenchyma cells, some with a slit-like hilum.","Cork may be present: polygonal thin-walled cells with brown contents."]},
+{h:"Active constituents",i:["Glycyrrhizin (5-7%): a triterpenoidal oleanane saponin-like glycoside. It is the sodium and calcium salt of glycyrrhizic acid and is 50 times as sweet as sugar.","Flavonoid glycosides: liquiritin, isoliquiritin, liquiritoside, rhamnoliquiritin, rhamnoisoliquiritin.","Coumarins: hermiarin and umbelliferone.","Free sugars (5-15%): glucose and sucrose, plus polysaccharides.","Bitter principle glycyramarin: abundant in the outer tissue, so it makes the unpeeled drug bitter.","Asparagine (amino acid), proteins, fat and starch (about 29%)."],
+ fh:"What happens to glycyrrhizin on hydrolysis",f:["Glycyrrhizin (sweet)","hydrolysis","Glycyrrhetic acid (aglycone) + 2 glucuronic acid","Sweet taste is lost"]},
+{h:"Tests for identity",i:["Powder + 1-2 drops of sulphuric acid (66% v/v) gives an orange-red colour.","Shaking the aqueous decoction gives a persistent froth (it contains saponins)."]},
+{h:"Use 1: peptic and duodenal ulcers",i:["★ An extract containing glycyrrhizin healed ulcers well. The deglycyrrhizinized fraction (DGL) was slightly less effective, and glycyrrhizin alone had no effect.","★ Conclusion: the antiulcer effect is clearest when glycyrrhizin is combined with other compounds (synergism). Still, DGL is the form most commonly used, because it removes the glycyrrhizin that causes the blood pressure problems.","★ Mechanism: DGL strengthens the normal defence of the digestive mucosal lining rather than reducing acidity (unlike H2-antagonists).","★ DGL is as effective as H2-antagonists and antacids for healing ulcers, with fewer or no significant side effects.","★ DGL is strongly indicated for preventing gastric ulcers in people taking ulcerogenic drugs (aspirin, corticosteroids).","Dose: 380 mg chewable tablets, between meals or 20 minutes before meals, 2-4 times daily."]},
+{h:"Use 2: mineralocorticoid-like action (the side effect)",i:["Glycyrrhetic acid has affinity for the kidney aldosterone receptors.","It also inhibits 5-β-reductase and 11-β-hydroxydehydrogenase, so cortisol and aldosterone accumulate and act for longer.","This gives pseudoaldosteronism: Na+ retention (hypernatremia), K+ loss (hypokalemia) and hypertension."],
+ fh:"How liquorice raises blood pressure",f:["Glycyrrhetic acid","Inhibits 5-β-reductase and 11-β-HSD","Cortisol and aldosterone action is prolonged","Na+ and water retention, more blood volume; capillaries more sensitive to catecholamines","Severe hypertension"]},
+{h:"Uses 3 to 7",i:["★ Anti-inflammatory (glycyrrhizin, glycyrrhetic acid, chalcones, flavonoids, especially in gastritis): inhibits prostaglandins and thromboxanes, like aspirin.","★ Anti-allergic (glycyrrhizin): inhibits histamine release from antigen-stimulated cells and intensifies the inhibitory action of dexamethasone.","Antiviral: glycyrrhizin irreversibly inactivates some viruses such as Herpes simplex, by interacting with sensitive virus proteins when they are made in host cells.","★ Liver: glycyrrhizin and its aglycone prevent cirrhosis (shown by preventing liver lesions in CCl4-poisoned rats). Glycyrrhizin + cysteine + glycine in normal saline improved liver function in hepatitis B and HIV.","Immunostimulant: induces interferons, which block viral DNA, activate macrophages and raise natural killer cell activity. Daily IV glycyrrhizin improves immune function."]},
+{h:"Use 8: other uses",i:["Topical for allergic inflammation and dermatitis; eczema and psoriasis (topical glycyrrhetinic acid is similar to, and may be better than, hydrocortisone).","Rheumatoid arthritis and Addison's disease (adrenal hypofunction).","Demulcent and expectorant.","Flavouring agent that masks bitter drugs; flavour for gum, candy, tobacco, snuff, and foaminess in beer.","Glycyrrhetic acid hydrogen succinate (GAHS), as a disodium salt, for oral and orofacial herpes. At 1% GAHS the nasal absorption of insulin is greatly enhanced."]}
+],
+tips:["Sweet = glycyrrhizin. Bitter = glycyramarin.","High BP + high Na+ + low K+ = pseudoaldosteronism.","For ulcers use DGL, not glycyrrhizin.","Tests: H2SO4 gives orange-red; decoction gives persistent froth."],
+mn:"Memory hook: Glycyr-RHIZ-in = sweet; Glycyr-AMA-rin = bitter (amara means bitter).",
+cmp:["Root + rhizome","Glycyrrhizin","Ulcers (DGL), anti-inflammatory, antiviral"],
+qz:[
+["Which constituent makes liquorice sweet?","Glycyrrhizin",["Glycyramarin","Liquiritin","Umbelliferone"],"Glycyrrhizin is 50 times sweeter than sugar. Glycyramarin is the bitter principle."],
+["Which form of liquorice is most commonly used for ulcers?","DGL (deglycyrrhizinized fraction)",["Glycyrrhizin alone","Glycyramarin","Glycyrrhizic acid sodium salt"],"Glycyrrhizin alone showed no antiulcer effect; DGL is the common form."],
+["What causes hypertension with liquorice?","Pseudoaldosteronism: Na+ and water retention with K+ loss",["Lack of cortisol and aldosterone","Na+ excretion and K+ retention","Inhibition of prostaglandins"],"Glycyrrhetic acid prolongs cortisol and aldosterone action, so Na+ and water are retained."],
+["What does the aqueous decoction of liquorice give when shaken?","A persistent froth",["An orange-red colour","A blue ring between layers","A rose-red colour"],"The froth shows saponins. The orange-red colour is the sulphuric acid test on the powder."]
+]},
+
+{id:"ipeca",n:"Ipecacuanha",sci:"Cephaelis ipecacuanha / C. acuminata",fam:"Rubiaceae",grp:"Roots",
+sum:"A root whose alkaloids emetine and cephaeline work as an expectorant in small doses and cause vomiting in large doses. Emetine HCl by injection treats amoebic dysentery.",
+facts:[["Part used","Dried root, or root and rhizome"],["Species","C. ipecacuanha = Rio (Brazilian); C. acuminata = Cartagena, Nicaragua or Panama"],["Sources","Brazil; C. acuminata from Colombia, Panama and Nicaragua, exported from Colombia and Costa Rica"],["Family","Rubiaceae"]],
+secs:[
+{h:"Characters",i:["★ Faint characteristic odour. The fine powder is irritant and sternutatory (makes you sneeze).","★ Bitter, acrid taste."]},
+{h:"Active constituents",i:["Isoquinoline alkaloids: emetine, cephaeline, psychotrine, psychotrine methyl ether, emetamine. Their structures are closely related.","Ipecacuanhin: a crystalline glycosidal tannin.","Acid saponin and ipecacuanhic acid.","Starch and calcium oxalate."]},
+{h:"Uses",i:["Expectorant in small doses (emetine > cephaeline).","Emetic in large doses (cephaeline > emetine).","Amoebic dysentery and amoebic hepatitis (emetine HCl by i.m. injection).","Diaphoretic (promotes sweating) and cholagogue (promotes bile flow)."]},
+{h:"Mechanism of the emetic action",i:["★ Locally: irritates the GI mucosa.","★ Centrally: stimulates the Chemoreceptor Trigger Zone (CTZ), which stimulates the vomiting centres in the medulla."],
+ fh:"From dose to vomiting",f:["Large dose of ipeca","Local GI irritation + CTZ stimulation","Vomiting centre in medulla","Deep inspiration, forceful contraction of diaphragm and abdominal muscles","Higher intra-abdominal pressure squeezes stomach and oesophagus","Severe vomiting"]},
+{h:"Test for emetine",i:["Digest the powder with concentrated HCl, add water, filter, and add a few small crystals of potassium chlorate to the filtrate. A yellow colour appears quickly, turns orange and finally red within an hour."]}
+],
+tips:["Small dose: emetine dominates = expectorant. Large dose: cephaeline dominates = emetic.","Ipeca vomits by two routes: local irritation and the CTZ.","Emetine HCl is injected for amoebic dysentery."],
+mn:"Memory hook: Emetine = Expectorant (both start with E); Cephaeline = vomiting (large dose).",
+cmp:["Root (+ rhizome)","Emetine, cephaeline","Expectorant, emetic, amoebic dysentery"],
+qz:[
+["Which alkaloid predominates in the large emetic doses?","Cephaeline",["Emetine","Psychotrine","Emetamine"],"Emetine > cephaeline gives an expectorant; cephaeline > emetine gives an emetic."],
+["Emetine HCl by i.m. injection is used for?","Amoebic dysentery and amoebic hepatitis",["Hypertension","Insomnia","Gastric ulcer"],"It is the antiamoebic use of ipeca."],
+["Which central site does ipeca stimulate to cause vomiting?","Chemoreceptor Trigger Zone (CTZ)",["Cerebellum","Hippocampus","Hypothalamus"],"The CTZ then stimulates the vomiting centres in the medulla."]
+]},
+
+{id:"gentian",n:"Gentian Root",sci:"Gentiana lutea",fam:"Gentianaceae",grp:"Roots",
+sum:"A fermented root full of bitter iridoid glycosides (amarogentin is one of the most bitter compounds known). It is a bitter tonic and stomachic, but not for gastric ulcer.",
+facts:[["Part used","Dried fermented root and rhizome"],["Source","Central Europe"],["Family","Gentianaceae"],["Key point","Taste is first sweet, then persistently bitter"]],
+secs:[
+{h:"Characters",i:["★ Characteristic odour.","★ Taste at first sweet but afterwards persistently bitter."]},
+{h:"Active constituents",i:["Bitter iridoid glycosides: gentiin, gentiopicroside (gentiopicrin or gentiamarin) and amarogentin.","Monoterpene alkaloids: gentianine and gentialutine. They may be artifacts formed by ammonia during isolation.","Carbohydrates: the trisaccharide gentianose and the disaccharides gentiobiose and sucrose."]},
+{h:"Uses and effects",i:["A favourite bitter tonic and stomachic.","Gentiopicroside is anti-inflammatory.","Gentianine is anti-inflammatory and hypotensive.","Contraindicated in gastric ulcer because it stimulates gastric secretion."]}
+],
+tips:["Gentian = bitter tonic.","Amarogentin is among the most bitter compounds known.","Avoid in gastric ulcer (stimulates gastric secretion).","Gentianine = anti-inflammatory AND hypotensive."],
+mn:"Memory hook: Gentian = Gastric stimulant, so no ulcers.",
+cmp:["Fermented root + rhizome","Amarogentin, gentiopicroside","Bitter tonic; avoid in ulcer"],
+qz:[
+["Which compound is among the most bitter known?","Amarogentin",["Gentianine","Gentianose","Gentiobiose"],"Amarogentin is a bitter iridoid glycoside."],
+["Why is gentian contraindicated in gastric ulcer?","It stimulates gastric secretion",["It lowers acidity too much","It causes severe hypotension","It is an emetic"],"Stimulating secretion would aggravate an ulcer."],
+["Which constituent is both anti-inflammatory and hypotensive?","Gentianine",["Amarogentin","Gentianose","Gentiin"],"Gentiopicroside is only anti-inflammatory; gentianine is also hypotensive."]
+]},
+
+{id:"jalap",n:"Jalap",sci:"Ipomoea purga",fam:"Convolvulaceae",grp:"Roots",
+sum:"A tuberous root with a glycosidal resin (convolvulin). It is a powerful stimulant laxative that pulls water into the gut, a hydragogue cathartic.",
+facts:[["Part used","Dried tuberous root"],["Source","Indigenous to Mexico; cultivated in India and Jamaica"],["Family","Convolvulaceae"],["Active part","Glycosidal resin (9-18%)"]],
+secs:[
+{h:"Active constituents",i:["Glycosidal resin (9-18%). About 90% of the jalap resin is insoluble in ether.","The main constituent is the ether-insoluble part: convolvulin (jalapin).","Colouring matter, mannitol, sugar, starch and a phytosterol."]},
+{h:"Uses and pharmacological effects",i:["A powerful stimulant laxative. It severely irritates the intestinal mucosa and so greatly increases motility.","Stimulant laxatives increase prostaglandin synthesis, which causes high secretion of water and electrolytes into the intestinal lumen.","So jalap is a powerful hydragogue cathartic (one that produces watery stools)."],
+ fh:"How jalap purges",f:["Resin (convolvulin)","Strong irritation of intestinal mucosa, more motility","More prostaglandins","Water and electrolytes pour into the lumen","Hydragogue cathartic"]}
+],
+tips:["Resin is the active part; convolvulin is the ether-insoluble main constituent.","Hydragogue = drives water into the gut.","Mechanism links irritation, motility and prostaglandins."],
+mn:"Memory hook: Jalap = Jet-fast laxative.",
+cmp:["Tuberous root","Glycosidal resin (convolvulin)","Powerful hydragogue cathartic"],
+qz:[
+["What is the main constituent of jalap resin?","Convolvulin (jalapin), the ether-insoluble part",["Emetine","Reserpine","Aconitine"],"About 90% of the resin is ether-insoluble, and convolvulin is that part."],
+["Why is jalap called a hydragogue cathartic?","It raises water and electrolyte secretion into the lumen (via prostaglandins)",["It absorbs water from the gut","It stimulates the CTZ","It lowers motility"],"Stimulant laxatives raise prostaglandin synthesis, so water and electrolytes enter the lumen."],
+["Which part of Ipomoea purga is used?","Tuberous root",["Rhizome","Bulb","Leaves"],"Jalap is the dried tuberous root."]
+]},
+
+{id:"rauwolfia",n:"Rauwolfia (Indian Snake Root)",sci:"Rauwolfia serpentina",fam:"Apocynaceae",grp:"Roots",
+sum:"Indole alkaloids, above all reserpine, lower blood pressure by a sympatholytic action. Ajmaline works like quinidine on arrhythmias.",
+facts:[["Part used","Dried rhizomes and roots"],["Sources","India, Pakistan, Burma, Thailand"],["Family","Apocynaceae"],["Key alkaloid","Reserpine"]],
+secs:[
+{h:"Active constituents",i:["Indole alkaloids: ajmaline, ajmalinine, ajmalicine, serpentine, serpentinine, reserpine and rescinnamine.","Phytosterols, fatty acids, unsaturated alcohols, dextrose and fumaric acid."]},
+{h:"Uses and pharmacological effects",i:["Treatment of insomnia.","Treatment of hypertension and certain neuropsychiatric disorders.","Ajmaline has properties similar to quinidine and is marketed in Japan for cardiac arrhythmia."]},
+{h:"Important notes",i:["The antihypertensive action of reserpine is due to its sympatholytic action.","Reserpine does not initiate breast cancer, but it may promote it in cells already initiated.","Rauwolfia is contraindicated with CNS depressants."]}
+],
+tips:["Reserpine = antihypertensive by sympatholytic action.","Ajmaline is quinidine-like = antiarrhythmic.","Do not combine with CNS depressants.","Reserpine promotes (does not initiate) breast cancer."],
+mn:"Memory hook: AJMaline = Arrhythmia; RESerpine = REduces pressure.",
+cmp:["Rhizome + roots","Reserpine, ajmaline","Hypertension, insomnia, arrhythmia"],
+qz:[
+["Ajmaline has pharmacological properties similar to which drug?","Quinidine",["Digoxin","Aspirin","Atropine"],"It is used in Japan for cardiac arrhythmia."],
+["The antihypertensive action of reserpine is due to?","Its sympatholytic action",["Aldosterone antagonism","Diuretic action","Mineralocorticoid-like action"],"Reserpine reduces sympathetic activity."],
+["What is said about reserpine and breast cancer?","It may promote cancer in previously initiated cells but does not initiate it",["It initiates breast cancer","It prevents breast cancer","It has no relation at all"],"Promotion, not initiation."]
+]},
+
+{id:"aconite",n:"Aconite Root (Wolf's Bane)",sci:"Aconitum napellus",fam:"Ranunculaceae",grp:"Roots",
+sum:"A very potent poison containing aconitine. It was once used for neuralgia, rheumatism and fever, but it is now rarely used.",
+facts:[["Part used","Dried roots"],["Source","Abundant in Central Europe; cultivated in England"],["Family","Ranunculaceae"],["Key alkaloid","Aconitine"]],
+secs:[
+{h:"Active constituents",i:["Diterpene ester alkaloids: aconitine, picraconitine, aconine, mesaconitine, hypaconitine, neopelline, napelline and others.","Starch and aconitic acid."]},
+{h:"Uses",i:["Aconite preparations and aconitine were formerly used externally for neuralgia and rheumatism, and internally for fever and pain.","It is a very potent poison and is now rarely used."]},
+{h:"Toxicity of aconitine",i:["Systemic paralysis.","Nausea and vomiting.","Dizziness and irritability.","Hypotension, arrhythmia, shock, coma and death.","Hydrocortisone is effective in treating the toxicity only if given in the early stages."]}
+],
+tips:["Aconitine = diterpene ester alkaloid and very potent poison.","Toxicity: paralysis, vomiting, hypotension, arrhythmia, death.","Hydrocortisone only works early."],
+mn:"Memory hook: Wolf's bane = the wolf-killer, so it is poison.",
+cmp:["Root","Aconitine","Formerly neuralgia and rheumatism; now a poison"],
+qz:[
+["Which alkaloid is the main toxic principle of aconite?","Aconitine",["Reserpine","Emetine","Scillaren"],"Aconitine is a diterpene ester alkaloid."],
+["What is said about hydrocortisone in aconite toxicity?","Effective only if given in the early stages",["Equally effective at any stage","Never useful","Used only to cause vomiting"],"The notes state it works only early."],
+["Which family does Aconitum napellus belong to?","Ranunculaceae",["Araliaceae","Apocynaceae","Polygonaceae"],"Aconite is in the buttercup family."]
+]},
+
+{id:"ginseng",n:"Ginseng Root",sci:"Panax ginseng",fam:"Araliaceae",grp:"Roots",
+sum:"A tonic and adaptogen. Ginsenosides (triterpenoidal saponins) boost immunity, lower blood sugar, aid alcohol metabolism and fight fatigue.",
+facts:[["Part used","Dried roots of Panax ginseng (Korean)"],["Family","Araliaceae"],["Key constituents","Ginsenosides (triterpenoidal saponins), panaxans"],["Special species","P. vietnamensis (majonoside-R2)"]],
+secs:[
+{h:"Active constituents",i:["Triterpenoidal saponins of two types: pentacyclic oleanane type, and tetracyclic dammarane type (protopanaxadiol, protopanaxatriol).","High molecular weight polysaccharides: panaxans and ginsenans.","Polyacetylenic alcohols: panaxynol and panaxydol.","Sesquiterpenes, lignans, sterols, flavonoids, amino acids.","Free sugars, vitamins (B1, B2, B12, nicotinic acid, pantothenic acid, biotin) and minerals (Zn, Cu, Mn, Ca)."]},
+{h:"Pharmacological effects",i:["General tonic: acts on human cells to promote protein accumulation (useful in anaemia); ginsenosides raise body weight and the protein and RNA of muscle and liver.","Immunostimulant: the aqueous extract boosts immunoglobulin formation, interferon production in spleen cells and phagocytic activity of lymphocytes. This means both cellular and humoral immunity.","Hypoglycemic in type II diabetes: it raises liver glucokinase activity, and panaxans stimulate insulin secretion (insulinomimetic).","Alcohol metabolism: it delays drowsiness from alcohol and shortens recovery by stimulating alcohol dehydrogenase (ginsenosides). It also reduces alcohol liver damage.","The aqueous extract lowers heart rate and blood pressure; ginsenoside Rb2 lowers serum cholesterol; panaxans are antifatigue.","Adaptogenic: a non-specific rise in resistance to external stressors, improving physical and psychophysical performance. Panax vietnamensis contains majonoside-R2, a very potent antistress and antioxidant, making it the most potent Panax species for that."]},
+{h:"Phytoestrogenic effect and general notes",i:["A few studies report an estrogenic effect. A 72-year-old woman took one capsule daily of Geriatric Pharmaton (contains ginseng) for a long time and experienced menstruation.","No effect on fertility, pregnancy or lactation; not mutagenic or carcinogenic; no effect on male sex hormone levels.","LD50 of pure ginsenosides: 270 mg/kg (i.v.), 342 mg/kg (i.p.), 505 mg/kg (i.m.), 5000 mg/kg (orally)."]},
+{h:"Adverse effects",i:["Long-term 3 g/kg: hypertension, nervousness, sleeplessness and morning diarrhoea.","Three years of high doses: dizziness and inability to concentrate in a few cases."]}
+],
+tips:["Adaptogen = general resistance to stress.","Hypoglycemic: glucokinase up, panaxans stimulate insulin.","Alcohol effect = stimulates alcohol dehydrogenase.","Most potent antistress species: Panax vietnamensis."],
+mn:"Memory hook: GINsenosides = GENeral tonic.",
+cmp:["Root","Ginsenosides, panaxans","Tonic, adaptogen, immunostimulant, hypoglycemic"],
+qz:[
+["Which constituents stimulate insulin secretion?","Panaxans",["Panaxynol","Majonoside-R2","Ginsenans only"],"Panaxans are insulinomimetic; ginseng also raises glucokinase."],
+["What does 'adaptogenic' mean?","A non-specific rise in the body's resistance to external stressors",["A specific rise in immunity to viruses","Lowering cholesterol","Increasing urine output"],"Adaptogens raise resistance to stress in general."],
+["Which Panax species is the most potent antistress and antioxidant?","Panax vietnamensis",["Panax ginseng (Korean)","Panax quinquefolius","Panax notoginseng"],"It contains majonoside-R2."],
+["Which enzyme do ginsenosides stimulate in alcohol metabolism?","Alcohol dehydrogenase",["Glucokinase","11-β-hydroxydehydrogenase","Allinase"],"This shortens drowsiness and recovery time."]
+]},
+
+{id:"rhubarb",n:"Rhubarb Rhizome",sci:"Rheum palmatum, R. officinale",fam:"Polygonaceae",grp:"Rhizomes",
+sum:"Rich in anthraquinones (sennosides and rhein). A small dose is a bitter stomachic, a larger dose purges and is then followed by an astringent effect from its tannins.",
+facts:[["Part used","Dried peeled rhizomes and big roots"],["Species","Rheum palmatum, R. officinale, or other Rheum species except R. rhaponticum"],["Source","China and Tibet"],["Family","Polygonaceae"]],
+secs:[
+{h:"Active constituents",i:["Anthraquinones without a carboxyl group: chrysophanol, aloe-emodin, emodin, physcion (free) and their glycosides chrysophanein and gluco-aloe-emodin.","Anthraquinones with a carboxyl group: rhein and its glycoside gluco-rhein.","Anthrones and dianthrones: sennosides A and B (dianthrone glucosides of rhein) and their oxalates, sennosides E and F.","Heterodianthrones from two different anthrones, e.g. palmidin A (aloe-emodin anthrone + emodin anthrone).","Astringent compounds: glucogallin, free gallic acid, epicatechin gallate and catechin.","Starch and calcium oxalate (about 5-40%)."]},
+{h:"Test for anthraquinone derivatives",i:["Shake the powder with ferric chloride and HCl and heat on a water bath for 10 minutes. Filter and cool, then extract with carbon tetrachloride. Wash the organic layer with water and shake with dilute ammonia: a rose-red to cherry-red colour appears."]},
+{h:"Uses and pharmacological effects",i:["Small doses: bitter stomachic.","Larger doses: purgation, followed by an astringent effect because of the tannoid constituents.","Only for mild constipation, not chronic constipation.","Can be used for diarrhoea caused by irritating material in the intestine (purge it out, then the astringent effect follows)."]}
+],
+tips:["Purges first, then astringent (tannins).","Only for mild constipation.","Anthraquinone test ends with ammonia giving rose-red to cherry-red.","Excludes R. rhaponticum."],
+mn:"Memory hook: Rhubarb = Rhein and sennosides purge, then tannins tighten.",
+cmp:["Peeled rhizome + big roots","Anthraquinones (sennosides, rhein)","Mild constipation, bitter stomachic"],
+qz:[
+["Why does a larger dose of rhubarb give an astringent effect after purgation?","Because of its tannoid (astringent) constituents",["Because of emodin","Because of glycyrrhizin","Because of volatile oil"],"Glucogallin, gallic acid and catechins are astringent."],
+["The anthraquinone test finally gives which colour after adding ammonia?","Rose-red to cherry-red",["Blue ring between layers","Yellow to orange to red","Persistent froth"],"This is the test for anthraquinone derivatives."],
+["Rhubarb can be used for?","Mild (not chronic) constipation",["Chronic constipation","Gastric ulcer","Heart failure"],"The notes say mild constipation only."]
+]},
+
+{id:"ginger",n:"Ginger Rhizome",sci:"Zingiber officinale",fam:"Zingiberaceae",grp:"Rhizomes",
+sum:"An aromatic, pungent rhizome used as a carminative and a strong antiemetic that relaxes the stomach wall. Its aroma comes from the sesquiterpene alcohol zingiberol.",
+facts:[["Part used","Scraped or unscraped rhizome"],["Best variety","Jamaica (also grown in China, India, Africa)"],["Indian and African ginger","More pungent and less pleasantly aromatic"],["Family","Zingiberaceae"]],
+secs:[
+{h:"Microscopical characters",i:["Oleoresin cells.","Large vascular bundles, usually near the endodermis, enclosed in a sheath of septate non-lignified fibres.","Starch grains."]},
+{h:"Active constituents",i:["Volatile oil with more than 50 constituents: monoterpenes (camphene, citral, borneol), sesquiterpene hydrocarbons (zingiberene) and the sesquiterpene alcohol zingiberol, which is responsible for the aroma.","5-8% resinous matter.","Starch and mucilage."]},
+{h:"Uses and actions",i:["Condiment, carminative and aromatic stimulant.","Powerful antiemetic, shown to be more effective than Dramamine. It improves motion sickness symptoms through a direct action on the stomach wall that relaxes it.","Antiulcerative activity due to the sesquiterpene hydrocarbons.","Strong antibacterial and antifungal action.","Antitumour: gingerol, shogaol and the essential oil caused cell death and antiproliferative effects in vitro and in animals.","Extracts show an antiaggregation effect on platelets."]}
+],
+tips:["Aroma = zingiberol (sesquiterpene alcohol).","Antiemetic by direct relaxation of the stomach wall; better than Dramamine.","Best variety = Jamaica.","Gingerol and shogaol = antitumour."],
+mn:"Memory hook: Ginger settles the tummy: it relaxes the stomach wall.",
+cmp:["Scraped or unscraped rhizome","Volatile oil, zingiberol","Antiemetic, carminative"],
+qz:[
+["Which constituent is responsible for the aroma of ginger oil?","Zingiberol (a sesquiterpene alcohol)",["Camphene","Zingiberene","Resin"],"Zingiberene is a hydrocarbon; zingiberol is the alcohol responsible for aroma."],
+["Which variety of ginger is considered the best?","Jamaican",["Indian","African","Chinese"],"Indian and African ginger are more pungent and less aromatic."],
+["How does ginger improve motion sickness?","Direct action on the stomach wall, relaxing it",["Stimulating the CTZ","Raising stomach acidity","Blocking prostaglandins in the brain"],"This is why it can be more effective than Dramamine."]
+]},
+
+{id:"turmeric",n:"Turmeric (Curcuma Rhizome)",sci:"Curcuma domestica",fam:"Zingiberaceae",grp:"Rhizomes",
+sum:"A yellow rhizome whose curcuminoids (mainly curcumin) are antioxidant, anti-inflammatory and protect the liver.",
+facts:[["Part used","Prepared rhizomes"],["Sources","West Pakistan, India, China, Java and other tropical countries"],["Family","Zingiberaceae"],["Main pigment","Curcumin"]],
+secs:[
+{h:"Active constituents",i:["Volatile oil.","Colouring matters called curcuminoids, the major one being curcumin.","Resin.","Gelatinized starch."]},
+{h:"Uses",i:["Aromatic stomachic and diuretic in Indian and Oriental medicine; used for jaundice and hepatitis because of the antihepatotoxic action of curcuminoids.","Colouring agent and condiment.","Very potent antioxidant (free radical scavenger).","Oral curcumin prevents colon cancer in rodents.","Anti-inflammatory by inhibiting eicosanoid biosynthesis. Eicosanoids include prostaglandins and thromboxanes, which cause the severe symptoms of inflammation.","May interfere with HIV replication.","Low concentrations interfere with Herpes simplex virus-1 replication and intravaginal virus-2 replication."]}
+],
+tips:["Curcumin = main curcuminoid.","Liver protection: antihepatotoxic.","Anti-inflammatory: blocks eicosanoids (prostaglandins, thromboxanes).","Antioxidant and colouring agent."],
+mn:"Memory hook: CURCUMin lives in CURCUMa.",
+cmp:["Prepared rhizome","Curcuminoids (curcumin)","Antioxidant, hepatoprotective, anti-inflammatory"],
+qz:[
+["What is the major curcuminoid in turmeric?","Curcumin",["Gingerol","Allicin","Zingiberene"],"Curcuminoids are the colouring matters."],
+["How is turmeric anti-inflammatory?","It inhibits eicosanoid biosynthesis",["It releases histamine","It stimulates aldosterone","It inhibits alcohol dehydrogenase"],"Eicosanoids include prostaglandins and thromboxanes."],
+["Why is turmeric used for jaundice and hepatitis?","Antihepatotoxic action of curcuminoids",["Anthraquinone laxative action","Cardiac glycosides","Mineralocorticoid-like action"],"Curcuminoids protect the liver."]
+]},
+
+{id:"garlic",n:"Garlic",sci:"Allium sativum",fam:"Liliaceae",grp:"Bulbs",
+sum:"A bulb with more than 100 sulphur compounds. Allicin is the antibiotic, ajoene is antifungal and antiplatelet, S-allylcysteine lowers cholesterol, and adenosine resists cooking.",
+facts:[["Part used","Bulbs"],["Sources","Central Asia, Southern Europe, USA, Egypt"],["Family","Liliaceae"],["Key point","More than 100 sulphur compounds"]],
+secs:[
+{h:"Adenosine",i:["A common substance in garlic and onion: adenine attached to ribose.","It is not destroyed by cooking and is used to protect from dangerous blood clots."]},
+{h:"Allicin",i:["A sulphur compound and potent antibiotic.","Antibacterial and antifungal. Animal studies (1995-2005) indicate it may reduce atherosclerosis and fat deposition, decrease blood pressure, be anti-inflammatory and act as an antioxidant to some extent."],
+ fh:"How allicin forms",f:["Alliin (odourless, flavourless)","+ enzyme allinase (garlic crushed or sliced)","Allicin"]},
+{h:"Aged garlic extract",i:["Sliced raw garlic stored in 15-20% ethanol for 20 months.","Allicin is largely lost, while newer stable, bioavailable antioxidants increase: S-allylcysteine (SAC), S-allyl mercaptocysteine, allixin, saponins and selenium.","SAC is one of the most active ingredients of aged garlic extract."]},
+{h:"S-allylcysteine",i:["A sulphur compound that reduces blood cholesterol (LDL).","Used for arteriosclerosis because it lowers plasma triglycerides.","Anticancer agent."]},
+{h:"Ajoene",i:["A sulphur compound that works against fungi and cancer.","Strongest activity against two fungi: Aspergillus niger (outer ear canal) and Candida albicans (vagina).","Prevents stomach cancer and blood clots."]},
+{h:"Diallyl sulphides",i:["Found in aged garlic: diallyl sulphide, disulphide and trisulphide.","Diallyl trisulphide helps the liver perform its functions better, is useful in human Cryptococcal meningitis, and is significantly antifungal and antibacterial."]},
+{h:"Other constituents and general notes",i:["Steroidal glycosides, volatile and fixed oils, albumin, mucilage and selenium.","Garlic compounds help to reduce blood pressure and blood sugar, relieve asthma and bronchitis, improve circulation and heart function, prevent cancer, and help the body remove toxins."]},
+{h:"Other uses",i:["Under investigation for AIDS; also acne, common cold and influenza (immunostimulant), fatigue, burns, arthritis and lumbago.","Food poisoning: aflatoxins are dangerous metabolites of Aspergillus flavus. Ajoene and diallyl sulphide in raw garlic prevent aflatoxin B1 binding to cell DNA.","Heavy metal poisoning: garlic absorbs lead, mercury and cadmium in the body and protects the erythrocyte membrane from destruction."]}
+],
+tips:["Alliin + allinase = allicin (when crushed).","Aged garlic: allicin falls, SAC rises.","Ajoene = strongest antifungal (Aspergillus niger, Candida albicans) and antiplatelet.","Adenosine survives cooking."],
+mn:"Memory hook: ALLIin + ALLInase = ALLIcin.",
+cmp:["Bulb","Allicin, ajoene, SAC","Antibacterial, antifungal, lowers BP and cholesterol"],
+qz:[
+["How is allicin formed?","Alliin meets the enzyme allinase when garlic is crushed or sliced",["Adenosine meets ribose","Ajoene is heated with ethanol","SAC is hydrolysed"],"Alliin is odourless; allicin is the active antibiotic."],
+["Which garlic compound is strongest against Candida albicans and Aspergillus niger?","Ajoene",["Adenosine","S-allylcysteine","Allicin"],"Ajoene also prevents blood clots and stomach cancer."],
+["Which is among the most active ingredients of aged garlic extract?","S-allylcysteine (SAC)",["Allicin","Alliin","Adenosine"],"Aging loses allicin but raises SAC."],
+["Which garlic compound is not destroyed by cooking?","Adenosine",["Allicin","Alliin","Ajoene"],"It helps protect from dangerous blood clots."]
+]},
+
+{id:"valerian",n:"Valerian Rhizome",sci:"Valeriana officinalis",fam:"Valerianaceae",grp:"Rhizomes",
+sum:"A sedative rhizome used mainly for insomnia. Its volatile oil is rich in bornyl esters of valerianic acid.",
+facts:[["Part used","Dried rhizome and roots"],["Collected","Autumn, then dried"],["Family","Valerianaceae"],["Main use","Insomnia"]],
+secs:[
+{h:"Active constituents",i:["Volatile oil: bornyl isovalerianate, bornyl acetate and bornyl formate, plus alcohols, terpenes and sesquiterpenes.","Alkaloids: chatinine and valerine.","Mucilage and resin."]},
+{h:"Uses",i:["Most commonly used for sleep disorders, especially insomnia.","Some people use it for depression, mild tremors, epilepsy and ADHD.","Long used for GI disorders such as diarrhoea, colic and irritable bowel syndrome.","Calmative in hysteria and other nervous disorders, often prescribed with bromides or other sedatives.","Mild diuretic effect, useful for menopausal hot flushes and insomnia.","Sedative for stress and palpitations."]}
+],
+tips:["Main use = insomnia (sedative).","Key oil constituent = bornyl isovalerianate.","Family Valerianaceae."],
+mn:"Memory hook: Valerian = Vale to sleep: sleep aid.",
+cmp:["Rhizome + roots","Volatile oil (bornyl isovalerianate)","Insomnia, sedative"],
+qz:[
+["What is valerian most commonly used for?","Insomnia (sleep disorders)",["Amoebic dysentery","Heart failure","Constipation"],"It is used as a sedative and calmative."],
+["Which is a main volatile oil constituent of valerian?","Bornyl isovalerianate",["Allicin","Emetine","Curcumin"],"Others are bornyl acetate and bornyl formate."],
+["Which family does valerian belong to?","Valerianaceae",["Liliaceae","Leguminosae","Rubiaceae"],"Valeriana officinalis."]
+]},
+
+{id:"squill",n:"White Squill",sci:"Urginea maritima",fam:"Liliaceae",grp:"Bulbs",
+sum:"A bulb with cardiac glycosides (bufadienolides, such as scillaren A). It acts on the heart and chest as a cardiotonic, expectorant and diuretic, but it is dangerous in large doses.",
+facts:[["Part used","Dried sliced bulbs"],["Family","Liliaceae"],["Type of glycoside","Cardiac glycosides (bufadienolides), scillarin"],["Aglycone","Scillaridin A (scillarenin)"]],
+secs:[
+{h:"Active constituents",i:["Cardiac glycosides (bufadienolides), scillarin.","Squill also contains an amorphous mixture called scillaren B, freely soluble in water and alcohol.","Flavonoids; mucilage (callose); sinistrin (carbohydrate similar to inulin); irritant resin."],
+ fh:"Removing sugars step by step",f:["Glucoscillaren A (primary glycoside)","remove 1 glucose","Scillaren A","remove 1 glucose","Proscillaridin A","remove all sugars","Scillaridin A / scillarenin (aglycone)"]},
+{h:"Chemical tests",i:["Mucilage: ruthenium red.","Liebermann test (steroidal part): a drop of conc. H2SO4 added to the glycoside in glacial acetic acid gives red, then violet, then blue, then green.","Keller-Killiani test (2-deoxy sugars): glycoside in glacial acetic acid with FeCl3, then H2SO4 added at the bottom. A blue colour forms between the two layers in 2-5 minutes and spreads into the acetic acid layer.","Baljet test (cardiac glycosides): glycoside with Baljet reagent (1% picric acid + 10% NaOH, 1:1) gives orange to red."]},
+{h:"Uses",i:["Cardiotonic (slows and strengthens the pulse) for irregular heartbeat and mild heart failure, despite serious safety concerns.","Lung diseases: chronic bronchitis, asthma with bronchitis, whooping cough.","Diuretic to relieve fluid retention (oedema)."]},
+{h:"Side effects",i:["In poisonous doses: violent inflammation of the GI and genitourinary tracts with nausea, vomiting, abdominal pain, convulsions, a marked fall in temperature, weak circulation and sometimes death.","Fresh squill rubbed on the skin causes intense irritation."]}
+],
+tips:["Cardiac glycosides here are bufadienolides.","Keller-Killiani detects 2-deoxy sugars; Liebermann detects the steroid part; Baljet detects cardiac glycosides.","Glycoside chain: glucoscillaren A to scillaren A to proscillaridin A to scillaridin A."],
+mn:"Memory hook: Squill = Slow and strengthen the pulse (cardiotonic).",
+cmp:["Dried sliced bulb","Scillaren A (bufadienolides)","Cardiotonic, expectorant, diuretic"],
+qz:[
+["Which test detects 2-deoxy sugars in cardiac glycosides?","Keller-Killiani test",["Liebermann test","Baljet test","Ruthenium red test"],"Liebermann is for the steroidal part; Baljet is general for cardiac glycosides."],
+["What is the aglycone of the squill glycosides?","Scillaridin A (scillarenin)",["Proscillaridin A","Scillaren A","Scillaren B"],"Removing all sugars gives scillaridin A."],
+["Which reagent tests for mucilage in squill?","Ruthenium red",["Baljet reagent","Conc. H2SO4 in acetic acid","Ferric chloride and ammonia"],"Squill contains mucilage (callose)."],
+["Which type of glycoside is present in squill?","Cardiac glycosides (bufadienolides)",["Anthraquinone glycosides","Iridoid glycosides","Cyanogenic glycosides"],"Scillaren A and related compounds."]
+]},
+
+{id:"redsquill",n:"Red Squill",sci:"Urginea maritima (red variety)",fam:"Liliaceae",grp:"Bulbs",
+sum:"The red variety of squill. It acts on the heart like digitalis and is a powerful expectorant, but its glycoside scilliroside is so toxic to rats that it is used as rat poison.",
+facts:[["What it is","A variety of Urginea maritima (white squill)"],["Family","Liliaceae"],["Why red","A red anthocyanin dissolved in the cell sap of the mesophyll"],["Special glycoside","Scilliroside"]],
+secs:[
+{h:"Uses",i:["Closely resembles digitalis: it increases the vigour and decreases the frequency of cardiac action.","Powerful expectorant for chronic bronchitis and cough.","In large doses it produces emesis.","The two varieties are said to be equally active, but scilliroside in the red variety is much more toxic to rats than scillaren-A. So red squill is widely used as a rat poison."]}
+],
+tips:["Colour = anthocyanin in the mesophyll sap.","Digitalis-like action on the heart.","Scilliroside is very toxic to rats = rat poison."],
+mn:"Memory hook: Red squill = Rat killer (scilliroside).",
+cmp:["Bulb","Scilliroside, scillaren A","Digitalis-like, expectorant, rat poison"],
+qz:[
+["What gives red squill its colour?","A red anthocyanin in the cell sap of the mesophyll",["Chlorophyll","Curcumin","Anthraquinones"],"The red colour is anthocyanin."],
+["Why is red squill used as a rat poison?","Scilliroside is much more toxic to rats than scillaren-A",["It contains emetine","It contains aconitine","It is a strong laxative"],"The two varieties are equally active in general."],
+["The action of red squill on the heart resembles which drug?","Digitalis",["Quinidine","Reserpine","Aspirin"],"It raises vigour and lowers frequency of cardiac action."]
+]}
+];
+
+/* ---------- HELPERS ---------- */
+var GROUPS=["Roots","Rhizomes","Bulbs"];
+var TOTALQ=D.reduce(function(a,d){return a+d.qz.length},0);
+var store={done:{},score:{}};
+try{var raw=localStorage.getItem("pharm2");if(raw){var p=JSON.parse(raw);store.done=p.done||{};store.score=p.score||{}}}catch(e){}
+function save(){try{localStorage.setItem("pharm2",JSON.stringify(store))}catch(e){}}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function byId(id){for(var i=0;i<D.length;i++)if(D[i].id===id)return D[i]}
+function opts(c,w){return shuffle([{t:c,ok:1}].concat(w.map(function(x){return{t:x,ok:0}})))}
+function optBtns(list,act,extra){return list.map(function(o){return '<button class="opt" data-act="'+act+'" data-ok="'+o.ok+'"'+extra+'>'+o.t+'</button>'}).join("")}
+
+/* ---------- NAV ---------- */
+function renderNav(cur){
+  var h='<a href="#home"'+(cur==="home"?' aria-current="page"':'')+'><span class="ck"></span>Start here</a>';
+  GROUPS.forEach(function(g){
+    h+='<span class="gl">'+g+'</span>';
+    D.forEach(function(d){if(d.grp===g)h+='<a href="#'+d.id+'"'+(cur===d.id?' aria-current="page"':'')+'><span class="ck">'+(store.done[d.id]?'✓':'')+'</span>'+d.n.split(" (")[0]+'</a>'});
+  });
+  h+='<span class="gl">Revision</span><a href="#compare"'+(cur==="compare"?' aria-current="page"':'')+'><span class="ck"></span>Quick comparison</a><a href="#exam"'+(cur==="exam"?' aria-current="page"':'')+'><span class="ck"></span>Final exam</a>';
+  document.getElementById("nav").innerHTML=h;
+  var a=document.querySelector('#nav a[aria-current="page"]');
+  if(a&&a.scrollIntoView&&window.innerWidth<900){try{a.scrollIntoView({inline:"center",block:"nearest"})}catch(e){}}
+}
+
+/* ---------- VIEWS ---------- */
+function li(t){var s=t.charAt(0)==="★";return '<li'+(s?' class="s"':'')+'>'+(s?t.slice(1).trim():t)+'</li>'}
+function homeView(){
+  var doneN=Object.keys(store.done).length;
+  var h='<section class="card hero"><div class="eyebrow">Pharmacognosy 2 · Medical terminology</div><h1>Study guide for 14 crude drugs</h1><p>Study first: every drug has an illustration, a plain-words summary, the key facts explained and exam tips. When you have covered all of them, check the comparison table and then sit the final exam.</p>'+
+   '<div class="stats"><div><b>'+D.length+'</b><span>drugs</span></div><div><b>'+TOTALQ+'</b><span>final exam questions</span></div><div><b>'+doneN+'/'+D.length+'</b><span>marked as studied</span></div></div></section>';
+  h+='<section class="card sec"><h2>How to use this guide</h2><ol class="steps"><li>Look at the illustration, then read the plain-words summary.</li><li>Go through each section; amber lines marked with a star are the points your PDF flagged with XX, so they are likely important.</li><li>Tick "Mark as studied" and move on to the next drug.</li><li>After the last drug, review the comparison table. The exam comes last.</li></ol><div class="row" style="margin-top:14px"><a class="btn" style="text-decoration:none" href="#liquorice">Start with Liquorice</a></div></section>';
+  GROUPS.forEach(function(g){
+    h+='<section><h2 style="font-size:22px;margin-bottom:10px">'+g+'</h2><div class="grid">';
+    D.forEach(function(d){if(d.grp===g)h+='<a class="dc" href="#'+d.id+'"><b>'+d.n.split(" (")[0]+'</b><small>'+d.sci+'</small><span style="font-size:14px;color:var(--muted)">'+d.fam+'</span>'+(store.done[d.id]?'<em>✓ Studied'+(store.score[d.id]!=null?' · quiz '+store.score[d.id]+'/'+d.qz.length:'')+'</em>':'')+'</a>'});
+    h+='</div></section>';
+  });
+  return h;
+}
+function drugView(d){
+  var h='<section class="card hd"><div class="eyebrow">'+d.grp+' · '+d.fam+'</div><h1>'+d.n+'</h1><div class="sci">'+d.sci+'</div></section>';
+  h+='<section class="plain"><div class="eyebrow">In plain words</div><p>'+d.sum+'</p></section>';
+  h+='<section class="card"><dl class="facts" style="margin:0">'+d.facts.map(function(f){return '<div><dt>'+f[0]+'</dt><dd>'+f[1]+'</dd></div>'}).join("")+'</dl></section>';
+  d.secs.forEach(function(s){
+    h+='<section class="card sec"><h2>'+s.h+'</h2><ul>'+s.i.map(li).join("")+'</ul>';
+    if(s.f)h+='<div class="flowh">'+s.fh+'</div><div class="flow">'+s.f.map(function(x,i){return (i%2===1&&d.id==="liquorice"&&false?'':'')+'<span>'+x+'</span>'+(i<s.f.length-1?'<i>→</i>':'')}).join("")+'</div>';
+    h+='</section>';
+  });
+  h+='<section class="card tips"><h2>Exam tips</h2><ul>'+d.tips.map(function(t){return '<li>'+t+'</li>'}).join("")+'</ul><div class="mn">'+d.mn+'</div></section>';
+  h+='<section class="card" id="quiz"><div class="qh"><h2>Quick quiz</h2><span class="qscore" id="qs" aria-live="polite">0 of '+d.qz.length+' answered</span></div>';
+  d.qz.forEach(function(q,qi){
+    h+='<div class="q" data-qi="'+qi+'"><p>'+(qi+1)+'. '+q[0]+'</p><div class="opts">'+optBtns(opts(q[1],q[2]),"opt",' data-d="'+d.id+'" data-q="'+qi+'"')+'</div><div class="ex" hidden>'+q[3]+'</div></div>';
+  });
+  h+='<div class="row" style="margin-top:8px"><button class="btn ghost" data-act="retry" data-d="'+d.id+'">Retry quiz</button><label class="row" style="gap:8px;cursor:pointer"><input type="checkbox" id="donebox" data-act="done" data-d="'+d.id+'"'+(store.done[d.id]?' checked':'')+'> Mark as studied</label></div></section>';
+  return h;
+}
+function compareView(){
+  var h='<section class="card hd"><div class="eyebrow">Revision</div><h1>Quick comparison</h1><div class="sci">All drugs side by side</div></section><section class="card"><div class="tblwrap"><table><thead><tr><th>Drug</th><th>Family</th><th>Part used</th><th>Key constituent</th><th>Main use</th></tr></thead><tbody>';
+  D.forEach(function(d){h+='<tr><td><a href="#'+d.id+'">'+d.n.split(" (")[0]+'</a></td><td>'+d.fam+'</td><td>'+d.cmp[0]+'</td><td>'+d.cmp[1]+'</td><td>'+d.cmp[2]+'</td></tr>'});
+  return h+'</tbody></table></div></section><section class="card"><div class="pn"><a class="btn ghost" href="#redsquill">← Red Squill</a><a class="btn" href="#exam">Go to the final exam →</a></div></section>';
+}
+
+/* ---------- EXAM ---------- */
+var ex=null;
+function examStart(n){
+  var all=[];D.forEach(function(d){d.qz.forEach(function(q){all.push({drug:d.n.split(" (")[0],q:q})})});
+  var list=shuffle(all).slice(0,n);
+  ex={list:list,i:0,right:0,wrong:[],answered:false,opts:opts(list[0].q[1],list[0].q[2])};
+}
+function examView(){
+  if(!ex)return '<section class="card hd"><div class="eyebrow">Revision</div><h1>Final exam</h1><div class="sci">Questions from every drug, in random order</div></section><section class="card"><p style="margin-top:0">Pick a length. You see the answer and explanation after each question, and a review of your mistakes at the end.</p><div class="row"><button class="btn" data-act="exstart" data-n="20">20 questions</button><button class="btn ghost" data-act="exstart" data-n="'+TOTALQ+'">All '+TOTALQ+' questions</button></div></section>';
+  if(ex.i>=ex.list.length){
+    var pct=Math.round(ex.right/ex.list.length*100);
+    var h='<section class="card hd"><div class="eyebrow">Result</div><div class="big">'+ex.right+' / '+ex.list.length+'</div><div class="sci">'+pct+'% correct. '+(pct>=85?'Excellent, you are ready.':pct>=60?'Good. Review the mistakes below.':'Go back over the drugs and try again.')+'</div><div class="row" style="margin-top:14px"><button class="btn" data-act="exstart" data-n="'+ex.list.length+'">Try again</button><button class="btn ghost" data-act="exreset">Change length</button></div></section>';
+    if(ex.wrong.length){h+='<section class="card"><h2 style="font-size:20px;margin-bottom:6px">Review your mistakes</h2>'+ex.wrong.map(function(w){return '<div class="wrongitem"><small>'+w.drug+'</small><p style="margin:2px 0 6px;font-weight:600">'+w.q[0]+'</p><div>Correct answer: <b>'+w.q[1]+'</b></div><div style="color:var(--muted);font-size:15px">'+w.q[3]+'</div></div>'}).join("")+'</section>'}
+    return h;
+  }
+  var cur=ex.list[ex.i];
+  return '<section class="card"><div class="qh"><h2>Final exam</h2><span class="qscore">Question '+(ex.i+1)+' of '+ex.list.length+' · '+ex.right+' correct</span></div><div class="bar"><i style="width:'+(ex.i/ex.list.length*100)+'%"></i></div><div class="eyebrow">'+cur.drug+'</div><div class="q" style="border:0;padding-top:4px"><p>'+cur.q[0]+'</p><div class="opts">'+optBtns(ex.opts,"exopt","")+'</div><div class="ex" id="exex" hidden>'+cur.q[3]+'</div></div><div class="row"><button class="btn" id="exnext" data-act="exnext" hidden>'+(ex.i===ex.list.length-1?'See result':'Next question')+'</button></div></section>';
+}
+
+/* ---------- ILLUSTRATIONS ---------- */
+function fig(inner,cap,h){h=h||200;return '<figure class="fig"><svg viewBox="0 0 360 '+h+'" role="img" aria-label="'+cap+'"><rect width="360" height="'+h+'" rx="12" fill="#EAF1ED"/>'+inner+'</svg><figcaption>'+cap+'</figcaption></figure>'}
+function tx(x,y,s,w){return '<text x="'+x+'" y="'+y+'" font-size="'+(w||10.5)+'" font-weight="600" fill="#27403A">'+s+'</text>'}
+var ART={
+liquorice:['<g transform="rotate(-8 180 100)"><rect x="30" y="64" width="240" height="38" rx="19" fill="#8B5A3C"/><path d="M50 76h200M46 88h208M56 96h190" stroke="#6B4128" stroke-width="1.5" opacity=".7"/><ellipse cx="270" cy="83" rx="13" ry="19" fill="#F2D24B" stroke="#C99A1E" stroke-width="2"/><ellipse cx="270" cy="83" rx="7" ry="11" fill="none" stroke="#C99A1E"/><rect x="60" y="122" width="170" height="28" rx="14" fill="#A56F49"/><ellipse cx="230" cy="136" rx="10" ry="14" fill="#F2D24B" stroke="#C99A1E" stroke-width="2"/></g>','Liquorice root: dark reddish-brown bark outside, bright-yellow wood inside (cut ends).'],
+ipeca:['<path d="M25 150 C75 95 115 175 165 118 S255 95 335 62" fill="none" stroke="#7A4A3A" stroke-width="15" stroke-linecap="round"/><path d="M25 150 C75 95 115 175 165 118 S255 95 335 62" fill="none" stroke="#3E2218" stroke-width="15" stroke-dasharray="2 8" opacity=".5"/><path d="M120 150 q-14 22 -30 30 M200 112 q4 28 -6 50 M270 90 q18 20 20 44" fill="none" stroke="#9A6B52" stroke-width="2"/>','Ipecacuanha: thin, wiry root marked by rings (annulations) along its length.'],
+gentian:['<g transform="rotate(-6 180 100)"><rect x="35" y="56" width="250" height="44" rx="16" fill="#A06E3E"/><path d="M50 68c60-6 120 6 220 0M48 84c70 6 130-6 225 0M60 94c60-4 120 4 200 0" stroke="#6E4725" stroke-width="2" fill="none"/><ellipse cx="285" cy="78" rx="14" ry="22" fill="#E3BE7C" stroke="#8A5E2F" stroke-width="2"/><rect x="70" y="124" width="170" height="34" rx="14" fill="#8C5C30"/><path d="M82 136c40-5 90 5 146 0M82 148c40 5 90-5 146 0" stroke="#5E3C1C" stroke-width="2" fill="none"/></g>','Gentian: thick, wrinkled, dark-brown root and rhizome pieces, paler inside.'],
+jalap:['<ellipse cx="120" cy="115" rx="72" ry="50" fill="#5B3B2B"/><path d="M70 95c30-14 80-14 100 4M62 120c40 14 90 14 120-4" stroke="#3D2519" stroke-width="2" fill="none" opacity=".7"/><ellipse cx="248" cy="82" rx="44" ry="32" fill="#6B4533"/><ellipse cx="270" cy="150" rx="46" ry="30" fill="#EAD9BE" stroke="#B89B6E" stroke-width="2"/><ellipse cx="270" cy="150" rx="30" ry="18" fill="none" stroke="#B89B6E"/><circle cx="262" cy="146" r="2" fill="#7A5A38"/><circle cx="278" cy="154" r="2" fill="#7A5A38"/><circle cx="270" cy="140" r="2" fill="#7A5A38"/>','Jalap: large dark tuberous roots; the cut slice (bottom right) is pale with resin cells.'],
+rauwolfia:['<path d="M30 140 C80 100 100 160 150 120 S230 90 290 70" fill="none" stroke="#7B5B3E" stroke-width="14" stroke-linecap="round"/><path d="M110 138 q-8 24 -26 34 M175 112 q6 26 -4 46 M235 92 q16 18 14 40 M60 126 q-20 10 -26 28" fill="none" stroke="#9B7A58" stroke-width="3" stroke-linecap="round"/><ellipse cx="300" cy="66" rx="10" ry="14" fill="#E2C79B" stroke="#8B6B44" stroke-width="2"/>','Rauwolfia: tortuous, slender rhizome and roots, grey-brown outside.'],
+aconite:['<path d="M140 34 C196 52 204 118 156 176 Q146 186 136 176 C88 118 96 52 140 34Z" fill="#3E2C22"/><path d="M118 70c10 30 10 62 8 90M160 70c-8 30-6 62-2 92" stroke="#6A4C3A" stroke-width="2" fill="none"/><path d="M250 90 C282 102 286 140 262 170 Q254 176 246 170 C222 140 226 102 250 90Z" fill="#54392C"/><path d="M146 176 q-6 14 -16 18 M150 178 q4 12 14 16" stroke="#7A5A46" stroke-width="2" fill="none"/>','Aconite: dark, conical (carrot-like) tuberous root with a smaller daughter tuber. Highly poisonous.'],
+ginseng:['<circle cx="180" cy="52" r="16" fill="#D8BC7A" stroke="#A58A4A" stroke-width="2"/><path d="M180 36 q-2-14 4-22 M176 36 q-10-10 -16 -12" stroke="#5E8C4A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M164 66 C150 100 156 130 166 140 L194 140 C204 130 210 100 196 66Z" fill="#D8BC7A" stroke="#A58A4A" stroke-width="2"/><path d="M168 140 C160 166 150 180 140 190 M190 140 C200 166 212 178 224 188" stroke="#D8BC7A" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M165 80 C140 90 126 110 118 126 M195 80 C220 90 234 110 242 126" stroke="#D8BC7A" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M146 170 l-14 6 M148 180 l-12 12 M214 170 l14 6 M212 180 l12 12" stroke="#A58A4A" stroke-width="2" fill="none"/>','Ginseng: forked, often man-shaped root (this is where the name comes from), pale yellow with fine rootlets.'],
+rhubarb:['<polygon points="40,120 110,70 190,84 200,150 120,178 52,160" fill="#C79A52" stroke="#8C6830" stroke-width="2"/><polygon points="220,70 300,60 330,120 290,170 222,150" fill="#D6AA5E" stroke="#8C6830" stroke-width="2"/><g stroke="#B5442F" stroke-width="2" fill="none" opacity=".85"><path d="M270 115 L270 75 M270 115 L303 100 M270 115 L300 140 M270 115 L262 158 M270 115 L235 130 M270 115 L238 90"/><circle cx="270" cy="115" r="22"/></g>','Rhubarb: peeled rhizome pieces, yellow-brown; the cut face shows a star-like pattern of red-brown lines.'],
+ginger:['<path d="M40 120 C30 90 60 76 84 90 C100 70 130 70 140 92 C170 74 200 80 205 104 C240 90 280 96 290 124 C300 150 270 164 240 156 C220 172 180 170 165 156 C140 172 100 168 90 150 C60 160 40 146 40 120Z" fill="#D8B57B" stroke="#A47E44" stroke-width="2"/><path d="M60 118c10 10 20 10 30 0M130 112c10 10 20 10 30 0M210 126c10 10 20 10 30 0" stroke="#A47E44" stroke-width="2" fill="none"/><ellipse cx="292" cy="118" rx="14" ry="22" fill="#F2E19A" stroke="#C9AE55" stroke-width="2"/><circle cx="112" cy="84" r="4" fill="#C9924E"/>','Ginger: knobbly, branched rhizome, tan outside and pale yellow inside (cut end on the right).'],
+turmeric:['<ellipse cx="150" cy="110" rx="84" ry="40" fill="#C98A2B" stroke="#8A5C14" stroke-width="2"/><ellipse cx="260" cy="70" rx="46" ry="18" transform="rotate(-24 260 70)" fill="#CB8F31" stroke="#8A5C14" stroke-width="2"/><ellipse cx="270" cy="150" rx="48" ry="17" transform="rotate(18 270 150)" fill="#CB8F31" stroke="#8A5C14" stroke-width="2"/><ellipse cx="68" cy="110" rx="14" ry="30" fill="#EE8A1C" stroke="#B35F0C" stroke-width="2"/><path d="M110 98c20 8 40 8 60 0M120 124c20-8 40-8 60 0" stroke="#8A5C14" stroke-width="2" fill="none"/>','Turmeric: short finger-like rhizomes, yellow-brown outside and deep orange where cut (curcumin).'],
+garlic:['<path d="M180 30 C176 44 160 52 140 76 C110 110 120 160 180 164 C240 160 250 110 220 76 C200 52 184 44 180 30Z" fill="#F4F0E6" stroke="#CDBFA0" stroke-width="2"/><path d="M180 36 C160 80 156 130 180 164 M180 36 C200 80 204 130 180 164 M150 70 C130 110 140 150 180 164 M210 70 C230 110 220 150 180 164" fill="none" stroke="#CDBFA0" stroke-width="1.6"/><path d="M164 164 q-6 18 -16 24 M180 166 v22 M196 164 q6 18 16 24" stroke="#B8A47A" stroke-width="2" fill="none"/><path d="M270 90 C258 110 262 140 280 150 C298 140 302 110 290 90 C284 84 276 84 270 90Z" fill="#EFE6D2" stroke="#CDBFA0" stroke-width="2"/>','Garlic: a bulb made of cloves inside a papery skin; one separated clove on the right.'],
+valerian:['<path d="M120 80 C130 60 230 60 240 80 C256 100 244 124 220 128 C190 134 160 134 136 128 C110 122 104 98 120 80Z" fill="#7B5A3C" stroke="#4E3822" stroke-width="2"/><g stroke="#A27C58" stroke-width="3" stroke-linecap="round" fill="none"><path d="M140 128 q-20 24 -36 52 M160 132 q-10 30 -14 52 M180 134 v50 M200 134 q8 30 14 52 M220 128 q20 24 38 50 M130 118 q-30 10 -52 28 M232 116 q30 8 54 26"/></g><path d="M170 66 q-4-20 6-32 M190 66 q6-18 -2-30" stroke="#5E8C4A" stroke-width="3" fill="none"/>','Valerian: short, dark rhizome carrying many thin rootlets.'],
+squill:['<path d="M180 40 C150 60 100 90 100 130 C100 170 140 184 180 184 C220 184 260 170 260 130 C260 90 210 60 180 40Z" fill="#E9DFC0" stroke="#B4A56E" stroke-width="2"/><path d="M180 44 C140 84 130 140 160 182 M180 44 C220 84 230 140 200 182 M140 70 C108 106 116 156 160 182 M220 70 C252 106 244 156 200 182" fill="none" stroke="#B4A56E" stroke-width="1.6"/><path d="M180 40 q-2-16 6-26" stroke="#8A9A5C" stroke-width="3" fill="none"/><path d="M286 96 q30-8 48 16 q-30 12 -48 -16Z M290 140 q30-8 48 16 q-30 12 -48 -16Z" fill="#F1EAD0" stroke="#B4A56E" stroke-width="2"/>','White squill: large bulb of overlapping fleshy scales; the dried drug is sold as slices (right).'],
+redsquill:['<path d="M180 40 C150 60 100 90 100 130 C100 170 140 184 180 184 C220 184 260 170 260 130 C260 90 210 60 180 40Z" fill="#C24A55" stroke="#8C2A33" stroke-width="2"/><path d="M180 44 C140 84 130 140 160 182 M180 44 C220 84 230 140 200 182 M140 70 C108 106 116 156 160 182 M220 70 C252 106 244 156 200 182" fill="none" stroke="#8C2A33" stroke-width="1.6"/><path d="M180 40 q-2-16 6-26" stroke="#8A9A5C" stroke-width="3" fill="none"/><path d="M286 96 q30-8 48 16 q-30 12 -48 -16Z M290 140 q30-8 48 16 q-30 12 -48 -16Z" fill="#D8707A" stroke="#8C2A33" stroke-width="2"/>','Red squill: the same bulb shape, but the scales are red because of an anthocyanin in the cell sap.']
+};
+function microLiquorice(){
+  var s='',i;
+  s+='<g transform="translate(14,10)">'+tx(0,10,'Fibres with crystal sheath');
+  s+='<path d="M2 44 C40 30 110 30 150 44 C110 58 40 58 2 44Z" fill="#E5D6A6" stroke="#8B7A3F" stroke-width="1.5"/>';
+  for(i=0;i<7;i++)s+='<rect x="'+(10+i*21)+'" y="'+(62+(i%2)*2)+'" width="9" height="9" fill="#fff" stroke="#6B5B2A"/>';
+  s+='</g><g transform="translate(190,10)">'+tx(0,10,'Starch granules (slit hilum)');
+  [[20,40,12],[52,32,9],[80,52,13],[112,36,10],[140,56,8],[40,68,8]].forEach(function(c){s+='<circle cx="'+c[0]+'" cy="'+c[1]+'" r="'+c[2]+'" fill="#fff" stroke="#5F7691" stroke-width="1.5"/><path d="M'+(c[0]-c[2]*0.6)+' '+c[1]+' h'+(c[2]*1.2)+'" stroke="#5F7691"/>'});
+  s+='</g><g transform="translate(14,112)">'+tx(0,10,'Cork cells (surface view)');
+  for(var r=0;r<3;r++)for(var c=0;c<6;c++)s+='<rect x="'+(c*25+(r%2)*12)+'" y="'+(20+r*22)+'" width="24" height="20" rx="4" fill="#D9B48F" stroke="#8B5E34"/>';
+  s+='</g><g transform="translate(190,112)">'+tx(0,10,'Xylem vessel, bordered pits');
+  s+='<rect x="0" y="22" width="150" height="48" rx="6" fill="#F2E8C9" stroke="#8B7A3F" stroke-width="1.5"/>';
+  for(i=0;i<5;i++)s+='<circle cx="'+(16+i*30)+'" cy="38" r="8" fill="none" stroke="#8B7A3F"/><circle cx="'+(16+i*30)+'" cy="38" r="3" fill="#8B7A3F"/><circle cx="'+(31+i*30)+'" cy="58" r="8" fill="none" stroke="#8B7A3F"/><circle cx="'+(31+i*30)+'" cy="58" r="3" fill="#8B7A3F"/>';
+  s+='</g>';
+  return fig(s,'Powdered liquorice under the microscope (schematic drawing).');
+}
+function microGinger(){
+  var s='',i;
+  s+='<g transform="translate(14,12)">'+tx(0,10,'Oleoresin cell')+'<circle cx="52" cy="62" r="30" fill="#F0C27A" stroke="#B5782A" stroke-width="2"/><circle cx="42" cy="56" r="4" fill="#D9963A"/><circle cx="60" cy="68" r="5" fill="#D9963A"/><circle cx="56" cy="50" r="3" fill="#D9963A"/></g>';
+  s+='<g transform="translate(132,12)">'+tx(0,10,'Bundle in septate fibres')+'<ellipse cx="52" cy="62" rx="20" ry="16" fill="#E7D3A0" stroke="#8B7A3F" stroke-width="1.5"/>';
+  for(i=0;i<12;i++){var a=i/12*Math.PI*2;s+='<ellipse cx="'+(52+Math.cos(a)*34).toFixed(1)+'" cy="'+(62+Math.sin(a)*28).toFixed(1)+'" rx="7" ry="5" fill="#fff" stroke="#8B7A3F"/><path d="M'+(52+Math.cos(a)*34).toFixed(1)+' '+(57+Math.sin(a)*28).toFixed(1)+' v10" stroke="#8B7A3F"/>'}
+  s+='</g><g transform="translate(250,12)">'+tx(0,10,'Starch grains');
+  [[20,40,16,10],[58,56,18,11],[34,84,15,9],[80,86,14,9]].forEach(function(c){s+='<ellipse cx="'+c[0]+'" cy="'+c[1]+'" rx="'+c[2]+'" ry="'+c[3]+'" fill="#fff" stroke="#5F7691" stroke-width="1.5"/><circle cx="'+(c[0]-c[2]*0.5)+'" cy="'+c[1]+'" r="1.8" fill="#5F7691"/>'});
+  s+='</g>';
+  return fig(s,'Powdered ginger under the microscope (schematic drawing).',140);
+}
+var MICRO={liquorice:microLiquorice,ginger:microGinger};
+
+/* ---------- STUDY VIEW (illustration first, then explanation) ---------- */
+function drugView2(d){
+  var a=ART[d.id];
+  var h='<section class="card hd"><div class="eyebrow">'+d.grp+' · '+d.fam+'</div><h1>'+d.n+'</h1><div class="sci">'+d.sci+'</div></section>';
+  h+='<section class="card"><div class="eyebrow">Illustration</div><div class="figs">'+fig(a[0],a[1])+(MICRO[d.id]?MICRO[d.id]():'')+'</div></section>';
+  h+='<section class="plain"><div class="eyebrow">In plain words</div><p>'+d.sum+'</p></section>';
+  h+='<section class="card"><dl class="facts" style="margin:0">'+d.facts.map(function(f){return '<div><dt>'+f[0]+'</dt><dd>'+f[1]+'</dd></div>'}).join("")+'</dl></section>';
+  d.secs.forEach(function(s){
+    h+='<section class="card sec"><h2>'+s.h+'</h2><ul>'+s.i.map(li).join("")+'</ul>';
+    if(s.f)h+='<div class="flowh">'+s.fh+'</div><div class="flow">'+s.f.map(function(x,i){return '<span>'+x+'</span>'+(i<s.f.length-1?'<i>→</i>':'')}).join("")+'</div>';
+    h+='</section>';
+  });
+  h+='<section class="card tips"><h2>Exam tips</h2><ul>'+d.tips.map(function(t){return '<li>'+t+'</li>'}).join("")+'</ul><div class="mn">'+d.mn+'</div></section>';
+  var k=D.indexOf(d),pv=D[k-1],nx=D[k+1];
+  h+='<section class="card"><label class="row" style="gap:8px;cursor:pointer;margin-bottom:14px"><input type="checkbox" id="donebox" data-act="done" data-d="'+d.id+'"'+(store.done[d.id]?' checked':'')+'> Mark as studied</label><div class="pn">'+
+    (pv?'<a class="btn ghost" href="#'+pv.id+'">← '+pv.n.split(" (")[0]+'</a>':'<a class="btn ghost" href="#home">← Start here</a>')+
+    (nx?'<a class="btn" href="#'+nx.id+'">'+nx.n.split(" (")[0]+' →</a>':'<a class="btn" href="#compare">Quick comparison →</a>')+'</div></section>';
+  return h;
+}
+
+/* ---------- ROUTER ---------- */
+function render(){
+  var id=(location.hash||"#home").slice(1);
+  var v=document.getElementById("view");
+  if(id==="home")v.innerHTML=homeView();
+  else if(id==="compare")v.innerHTML=compareView();
+  else if(id==="exam")v.innerHTML=examView();
+  else if(byId(id))v.innerHTML=drugView2(byId(id));
+  else{id="home";v.innerHTML=homeView()}
+  renderNav(id);
+}
+window.addEventListener("hashchange",function(){render();window.scrollTo(0,0)});
+
+/* ---------- EVENTS ---------- */
+function updateQuizScore(did){
+  var d=byId(did),qs=document.querySelectorAll(".q[data-qi]");
+  var ans=0,right=0;qs.forEach(function(q){if(q.classList.contains("answered"))ans++;if(q.classList.contains("right"))right++});
+  document.getElementById("qs").textContent=ans===d.qz.length?('Score: '+right+' of '+d.qz.length):(ans+' of '+d.qz.length+' answered');
+  if(ans===d.qz.length){store.score[did]=right;save()}
+}
+function reveal(box,btn){
+  box.querySelectorAll(".opt").forEach(function(b){b.disabled=true;if(b.getAttribute("data-ok")==="1")b.classList.add("ok")});
+  if(btn.getAttribute("data-ok")!=="1")btn.classList.add("no");
+}
+document.getElementById("view").addEventListener("click",function(e){
+  var b=e.target.closest("[data-act]");if(!b)return;
+  var act=b.getAttribute("data-act");
+  if(act==="opt"){
+    var q=b.closest(".q");if(q.classList.contains("answered"))return;
+    q.classList.add("answered");if(b.getAttribute("data-ok")==="1")q.classList.add("right");
+    reveal(q,b);q.querySelector(".ex").hidden=false;updateQuizScore(b.getAttribute("data-d"));
+  }else if(act==="retry"){render()}
+  else if(act==="done"){var did=b.getAttribute("data-d");if(b.checked)store.done[did]=true;else delete store.done[did];save();renderNav(did)}
+  else if(act==="exstart"){examStart(parseInt(b.getAttribute("data-n"),10));render()}
+  else if(act==="exreset"){ex=null;render()}
+  else if(act==="exopt"){
+    if(ex.answered)return;ex.answered=true;var cur=ex.list[ex.i];
+    if(b.getAttribute("data-ok")==="1")ex.right++;else ex.wrong.push(cur);
+    reveal(b.closest(".q"),b);document.getElementById("exex").hidden=false;document.getElementById("exnext").hidden=false;
+  }else if(act==="exnext"){
+    ex.i++;ex.answered=false;if(ex.i<ex.list.length){var n=ex.list[ex.i];ex.opts=opts(n.q[1],n.q[2])}
+    render();window.scrollTo(0,0);
+  }
+});
+render();
+</script>
